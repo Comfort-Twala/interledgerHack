@@ -1,6 +1,6 @@
-# TEAM 11
+# TEAM 11 :rocket:
 
-## Team members
+## Team members :book:
 
 1. Comfort Twala
 2. Daniel Njini
