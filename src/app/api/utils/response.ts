@@ -1,10 +1,12 @@
-// lib/sendResponse.ts
-import { NextResponse } from "next/server";
-import { ApiResponse } from "./apiResponse";
+//Base response for all responses
+import { NextResponse } from 'next/server';
+import { ApiResponse } from './apiResponse';
 
-export const sendResponse = <T>(
-  statusCode: number,
-  data: ApiResponse<T>
-) => {
-  return NextResponse.json(data, { status: statusCode });
-};
+export function sendResponse<T>(
+  result: T | null,
+  status: number,
+  error: string | null
+): NextResponse<ApiResponse<T>> {
+  const apiResponse: ApiResponse<T> = { result, status, error };
+  return NextResponse.json(apiResponse, { status });
+}
