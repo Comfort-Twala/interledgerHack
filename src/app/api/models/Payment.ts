@@ -7,5 +7,6 @@ export interface Payment {
     monthly_payment: string; 
     start_date: string;
     end_date: string;
+    payment_ref_user: number;
   }
   
