@@ -4,7 +4,7 @@ import supabase from '../utils/databaseConfig';
 export const createUser = async (user: Omit<User, 'id'>) => {
   const { data, error } = await supabase
     .from('User')
-    .insert([user]); // No created_at or updated_at
+    .insert([user]); 
 
   if (error) throw error;
   return data;
