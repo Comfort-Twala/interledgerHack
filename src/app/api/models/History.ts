@@ -4,6 +4,6 @@ export interface History {
     amount: string;
     date: string;
     reference: string; 
-    history_ref_user: string;
+    history_ref_user: number;
   }
   

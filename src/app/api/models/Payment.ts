@@ -2,9 +2,9 @@
 export interface Payment {
     id: number; 
     name: string;
-    inital_amount: string;
-    remaining_amount: string;
-    monthly_payment: string; 
+    inital_amount: number;
+    remaining_amount: number;
+    monthly_payment: number; 
     start_date: string;
     end_date: string;
     payment_ref_user: number;
