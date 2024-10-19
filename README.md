@@ -1,3 +1,13 @@
+# TEAM 11
+
+## Team members
+
+1. Comfort Twala
+2. Daniel Njini
+3. Njabulo Mdluli
+4. Sabelo Khoza
+
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
