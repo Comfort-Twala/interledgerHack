@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { sendResponse } from "../utils/response";
-import HistoryService from "../services/HistoryService";
+import HistoryService from "../services/historyService";
 
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
