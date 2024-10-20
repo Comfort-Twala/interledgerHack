@@ -37,14 +37,14 @@ export function MainNav({
         Dashboard
       </Link>
       <Link
-        href="/customers"
+        href="/history"
         className={cn(
           "text-sm font-medium transition-colors hover:text-primary",
-          selected === "customers" ? "text-foreground" : "text-muted-foreground"
+          selected === "history" ? "text-foreground" : "text-muted-foreground"
         )}
-        onClick={() => handleClick("customers")}
+        onClick={() => handleClick("history")}
       >
-        Accounts
+        History
       </Link>
     </nav>
   )
