@@ -12,10 +12,21 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { createClient } from "@supabase/supabase-js";
+
+// Initialize Supabase client
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+);
 
 type PasswordStrength = "Weak" | "Medium" | "Strong" | "Very Strong" | "";
 
-export default  function Register() {
+export default function Register() {
+  const [name, setName] = useState<string>("");
+  const [surname, setSurname] = useState<string>("");
+  const [idnumber, setIdNumber] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [passwordStrength, setPasswordStrength] = useState<PasswordStrength>("");
@@ -71,10 +82,40 @@ export default  function Register() {
     }
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Handle form submission logic here
-    console.log("Form submitted");
+
+    if (!passwordsMatch || passwordStrength === "Weak") {
+      alert("Please ensure the passwords match and are strong enough.");
+      return;
+    }
+
+    let { data, err } = await supabase.auth.signUp({
+      email: email,
+      password: password,
+    })
+
+    if (data){
+
+      // Save form data using Supabase
+      const { error } = await supabase
+      .from("user") // Replace with your actual table name
+      .insert({
+        first_name: name,
+        last_name: surname,
+        id_no: idnumber,
+        email: email
+      });
+      
+      if (error) {
+        console.error("Error submitting form:", error);
+        alert("Error submitting the form");
+      } else {
+        console.log("Form submitted successfully");
+        
+        alert("Registration successful");
+      }
+    }
   };
 
   return (
@@ -88,11 +129,25 @@ export default  function Register() {
           <form className="grid gap-4" onSubmit={handleSubmit}>
             <div className="grid gap-2">
               <Label htmlFor="name">Name</Label>
-              <Input id="name" type="text" placeholder="Name" required />
+              <Input
+                id="name"
+                type="text"
+                placeholder="Name"
+                required
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
             </div>
             <div className="grid gap-2">
               <Label htmlFor="surname">Surname</Label>
-              <Input id="surname" type="text" placeholder="Surname" required />
+              <Input
+                id="surname"
+                type="text"
+                placeholder="Surname"
+                required
+                value={surname}
+                onChange={(e) => setSurname(e.target.value)}
+              />
             </div>
             <div className="grid gap-2">
               <Label htmlFor="idnumber">ID/Passport number</Label>
@@ -101,6 +156,8 @@ export default  function Register() {
                 type="text"
                 placeholder="ID/Passport number"
                 required
+                value={idnumber}
+                onChange={(e) => setIdNumber(e.target.value)}
               />
             </div>
             <div className="grid gap-2">
@@ -110,6 +167,8 @@ export default  function Register() {
                 type="email"
                 placeholder="m@example.com"
                 required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div className="grid gap-2">
@@ -142,7 +201,11 @@ export default  function Register() {
                 <p>Passwords do not match.</p>
               </Card>
             )}
-            <Button type="submit" className="w-full" disabled={!passwordsMatch || passwordStrength === "Weak"}>
+            <Button
+              type="submit"
+              className="w-full"
+              disabled={!passwordsMatch || passwordStrength === "Weak"}
+            >
               Register
             </Button>
           </form>
