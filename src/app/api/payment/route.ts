@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import PaymentService from "../services/paymentService";
-import { sendResponse } from "../utils/response";
+import PaymentService from "@/lib/services/paymentService";
+import { sendResponse } from "@/lib/utils/response";
 
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);

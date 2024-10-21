@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { sendResponse } from "../utils/response";
-import UserService from "../services/userService";
+import { sendResponse } from "@/lib/utils/response";
+import UserService from "@/lib/services/userService";
 
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
@@ -19,7 +19,7 @@ export async function GET(request: Request) {
         const users = await UserService.getUsers();
         return sendResponse(users, 200, null);
     } catch (error) {
-        return sendResponse(null, 500, 'Internal Server Error');
+        return sendResponse(null, 500, error instanceof Error ? error.message : 'Internal Server Error...!');
     }
 }
 
